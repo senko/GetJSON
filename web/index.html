@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>GetJSON.net</title>
+        <meta name="description" content="Make AJAX requests to anywhere">
+        <meta name="author" content="Senko Rašić">
+
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css">
+        <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css">
+
+        <script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+        <script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
+
+        <!-- <link rel="shortcut icon" href="images/favicon.ico"> -->
+
+        <style type="text/css">
+            header {
+                margin-top: 80px;
+                margin-bottom: 40px;
+            }
+
+            section {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            p.code {
+                margin-top: 20px;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            p.code code {
+                font-size: 1.5em;
+                font-weight: bold;
+            }
+
+            fieldset.center {
+                text-align: center;
+            }
+
+            footer {
+                margin-bottom: 40px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container">
+                <h3><a href="#">GetJSON</a></h3>
+                    <ul class="nav">
+                        <li class="active"><a href="#api">API</a></li>
+                        <li><a href="#demo">Demo</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#example">Example</a></li>
+                        <li><a href="#ssl">SSL &amp; POST</a></li>
+                        <li><a href="#credits">Credits</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <header>
+                <h1>GetJSON <small>Make AJAX requests to anywhere</small></h1>
+            </header>
+
+            <section>
+                <div class="page-header">
+                    <h2><a name="api"></a>API</h2>
+                </div>
+                <p>
+                    The API is just one GET method.
+                </p>
+                <p class="code">
+                    <code>
+                        http://getjson.net/get/?url=http://www.google.com/&amp;callback=fn
+                    </code>
+                </p>
+                <p>
+                    Pass in the URL you want to fetch and the callback function name for JSONP requests. The
+                    result will be a JSON-encoded text string containing the fetched content.
+                </p>
+                <p>
+                    Optionally, you can specify <code>type=json</code> parameter, which will return the
+                    decoded JSON object instead of the string value. For this, the original data to be fetched must be JSON as well.
+                </p>
+            </section>
+
+            <section>
+                <div class="page-header">
+                    <h2><a name="demo"></a>Demo</h2>
+                </div>
+                <p>
+                    <form class="demo">
+                        <fieldset class="center">
+                            <legend>
+                                Enter the URL to fetch
+                            </legend>
+                            <div class="clearfix">
+                                <input class="xxlarge" type="text" id="url_field" value="http://senko.net/en/feed/">
+                                <input type="submit" class="btn primary" value="Get JSON" />
+                            </div>
+                        </fieldset>
+                    </form>
+                </p>
+            </section>
+
+            <section>
+                <div class="page-header">
+                    <h2><a name="about"></a>About</h2>
+                </div>
+                <p>
+                    If you're building an awesome web app, there's a lot that you can do - audio, video, 3D, realtime.
+                </p>
+
+                </p>
+                    But there's one thing you largely <em>can't</em> do: fetch data from anywhere in the internet.
+                    Thanks to the <a href="http://en.wikipedia.org/wiki/XMLHttpRequest#Cross-domain_requests">XMLHttpRequest
+                    same-origin policy</a>, you can only make requests to your own server, or to servers which
+                    specifically allowed you to do so.
+                </p>
+
+                <p>
+                    GetJSON solves this, for free.
+                </p>
+            </section>
+
+            <section>
+                <div class="page-header">
+                    <h2><a name="example"></a>Example</h2>
+                </div>
+                <p>
+                    This example uses jQuery <code>.ajax()</code> to get an RSS feed from my blog:
+                </p>
+                <pre class="prettyprint linenums">
+                    $(function() {
+                        $.ajax('http://getjson.net/get/?url=' + escape('http://senko.net/en/feed/'), {
+                            dataType: "jsonp xml", /* make a JSONP request, convert the result to XML */
+                            success: function(data) {
+                                /* do something with XML data */
+                            }
+                        });
+                    });</pre>
+            </section>
+
+            <section>
+                <div class="page-header">
+                    <h2><a name="ssl"></a>SSL &amp; POST support</h2>
+                </div>
+                <div id="getnotified-form">
+                    <p>
+                        Need to use SSL or make POST requests? We've got that coming. Leave your e-mail address
+                        and we'll let you know when it's ready:
+                    </p>
+                    <form class="getnotified" method="post" action="/getnotified/">
+                        <fieldset>
+                            <label for="email_field">Your mail address:</label>
+                            <div class="input">
+                                <input class="xlarge" type="text" id="email_field" name="email">
+                                <input type="submit" class="btn primary" name="submit" value="Get notified" />
+                            </div>
+                            <div class="clearfix">
+                            </div>
+                        </fieldset>
+                    </form>
+                    <p>
+                        We won't spam you or sell your mail address to anyone. Spam is <em>so</em> 200X.
+                    </p>
+                </div>
+                <p id="getnotified-thanks" style="display: none;">
+                    Thanks, we'll let you know when we introduce SSL and POST support. If you'd like to
+                    suggest additional features you need, contact us on <a href="http://twitter.com/senkorasic">Twitter</a>.
+                </p>
+            </section>
+        </div>
+
+        <footer>
+            <div class="inner">
+                <div class="container">
+                    <p>
+                        Copyright &copy; 2011. by Dobar Kod d.o.o. Written by <a href="http://senko.net/en/">Senko Rašić</a>
+                        (<a href="http://twitter.com/senkorasic">@senkorasic</a>).
+                        Uses Node.js, Express.js, Twitter Bootstrap and jQuery.
+                    </p>
+                    <p>
+                        See also:
+                            <a href="http://awwapp.com/">A Web Whiteboard</a> |
+                            <a href="http://speeka.net/">Speeka</a> |
+                            <a href="http://en.co.de/">Encode</a> |
+                            <a href="http://sparrw.com/">Sparrw</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <script type="text/javascript">
+            $(function() {
+                prettyPrint();
+
+                $('form.demo').submit(function() {
+                    var url = $.trim($('#url_field').val());
+                    if (url.length > 0) {
+                        window.location.href = 'http://getjson.net/get/?url=' +
+                            escape(url) + '&callback=cb';
+                    }
+                    return false;
+                });
+
+                $('form.getnotified').submit(function() {
+                    var mail = $.trim($('#email_field').val());
+                    if ((mail.length == 0) || (mail.indexOf('@') == -1))
+                        return false;
+                    else
+                        return true;
+                });
+
+                if (window.location.hash == '#thanks') {
+                    $('#getnotified-form').hide();
+                    $('#getnotified-thanks').show();
+                    window.location.hash = '#ssl';
+                }
+            });
+        </script>
+    </body>
+</html>
